@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=SABRE
+GenericName=sabre
+Comment=Fly a combat flight simulator
+Icon=xsabre
+Exec=XRunSabre
+Terminal=false
+Categories=Application;Game;Simulation;

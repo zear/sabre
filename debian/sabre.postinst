@@ -1,0 +1,27 @@
+#! /bin/sh
+
+set -e
+
+case "$1" in
+  configure)
+    if [ -z "$2" ]; then
+      dpkg-statoverride --update --add root root 4755 /usr/games/sabre
+    else
+      if dpkg --compare-versions "$2" le-nl 0.2.4b-25; then
+        if [ "$(dpkg-statoverride --list /usr/games/sabre)" = "root root 2755 /usr/games/sabre" -o \
+             "$(dpkg-statoverride --list /usr/games/sabre)" = "root root 1755 /usr/games/sabre" ]; then
+          dpkg-statoverride --force --update --add root root 4755 /usr/games/sabre
+        fi
+      fi
+    fi
+    ;;
+  abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+  *)
+    echo "postinst called with unknown argument \`$1'" >&2
+    exit 1
+    ;;
+esac
+
+#DEBHELPER#
+

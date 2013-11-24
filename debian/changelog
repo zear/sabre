@@ -1,0 +1,366 @@
+sabre (0.2.4b-26) unstable; urgency=low
+
+  * debian/sabre.postinst:
+    + Call dpkg-statoverride with --force (Closes: #501958).
+    + SUID root ist 4755, not 1755.
+  * debian/rules:
+    + Remove .pc dir from quilt on clean.
+
+ -- Evgeni Golov <sargentd@die-welt.net>  Tue, 14 Oct 2008 14:19:37 +0200
+
+sabre (0.2.4b-25) unstable; urgency=low
+
+  [ Evgeni Golov ]
+  * debian/patches/030_launch_scripts.diff:
+    + Update the patch and use mktemp for creating temporary files.
+      Closes: #433996.
+      Fixes: CVE-2008-4407 (insecure temp file).
+  * debian/sabre.postinst:
+    + Fix the call to dpkg-statoverride in the postinst.
+    + Call "set -e" first.
+  * debian/sabre.postem:
+    + Call "set -e" first.
+  * debian/control:
+    + Add myself to uploaders
+
+  [ Barry deFreese ]
+  * Add .desktop file. (Closes: #478984).
+    + Call dh_desktop
+
+ -- Evgeni Golov <sargentd@die-welt.net>  Sun, 05 Oct 2008 10:33:06 +0200
+
+sabre (0.2.4b-24) unstable; urgency=low
+
+  [ Jon Dowland ]
+  * update menu section to "Games/Action" for menu policy transition.
+    Thanks Linas Žvirblis.
+  * add Homepage: control field to source stanza
+
+  [ Barry deFreese ]
+  * Bump debhelper build-dep to 5 to match compat.
+  * Remove Homepage from package descriptions.
+  * Make distclean not ignore errors.
+  * 000_cflags.diff - Remove -m486 and -fforce-mem.
+    + Deprecated in gcc-4.3.
+  * Build with gcc-4.3. (Closes: #461694).
+    + 035_gcc43_1.diff.
+    + 040_gcc43_2.diff.
+    + 041_gcc43.diff.
+  * Bump Standards Version to 3.7.3. (Menu policy changes).
+  * Add myself to uploaders.
+  * Replace `pwd` with $(CURDIR) in rules.
+  * Remove empty dirs from sabre-common package.
+
+  [ Cyril Brulebois ]
+  * Fix trailer line in the changelog entry for 0.2.4b-23.
+
+  [ Eddy Petrișor ]
+  * add missing Vcs-Svn headers
+
+ -- Barry deFreese <bddebian@comcast.net>  Sun, 23 Mar 2008 18:53:35 -0400
+
+sabre (0.2.4b-23) unstable; urgency=high
+
+  [ Sam Hocevar (Debian packages) ]
+  * debian/patches/025_endianness.diff:
+    + Fix endianness issues in file import/export routines (Closes: #397830).
+
+ -- Sam Hocevar (Debian packages) <sam+deb@zoy.org>  Fri, 17 Nov 2006 00:41:39 +0100
+
+sabre (0.2.4b-22) unstable; urgency=low
+
+  * Moved packaging to the Debian Games Team.
+  * Use quilt for patch management.
+  * debian/control:
+    + Set policy to 3.7.2.
+    + Build-depend on quilt.
+  * debian/copyright:
+    + Fixed FSF address.
+
+  * debian/patches/000_autotools.diff:
+    + New patch from old diff.gz -- patch build files to fix compilation
+      with SDL and without SVGAlib.
+
+  * debian/patches/000_cflags.diff:
+    + New patch from old diff.gz -- fix cflags to work around m68k gcc bugs.
+
+  * debian/patches/010_rebootstrap.diff:
+    + New patch from old diff.gz -- rebootstrap all package.
+
+  * debian/patches/020_bugfixes.diff:
+    + New patch from old diff.gz -- various code bugfixes.
+
+  * debian/patches/030_launch_scripts.diff:
+    + New patch from old diff.gz -- fix launch scripts for the Debian
+      directory hierarchy.
+
+ -- Sam Hocevar (Debian packages) <sam+deb@zoy.org>  Mon, 15 May 2006 16:23:19 -0500
+
+sabre (0.2.4b-21) unstable; urgency=low
+
+  * debian/control:
+    + Set policy to 3.6.2.1.
+    + Build-depend on libsvga1-dev instead of svgalibg1-dev.
+  * debian/rules:
+    + Build the binary:all package in binary-indep (Closes: #276194).
+    + Use dh_compress instead of manually compressing files.
+  * debian/compat: 
+    + Set debhelper compat to 4.
+  * Re-ran "rm -f config.sub config.guess configure install-sh missing \
+    mkinstalldirs && aclocal && automake --copy --add-missing && autoconf".
+  * src/rendpoly.h: patch by Aurélien Jarno to fix the build with gcc-4.0
+    (Closes: #321323).
+  * cflags:
+    + Replaced -malign-* with -falign-*.
+
+ -- Sam Hocevar (Debian packages) <sam+deb@zoy.org>  Wed, 24 Aug 2005 16:54:03 +0200
+
+sabre (0.2.4b-20) unstable; urgency=low
+
+  * debian/control:
+    + Set policy to 3.6.1.1.
+  * debian/rules:
+    + Install icon in /usr/share/pixmaps, not /usr/X11R6/include/X11/pixmaps.
+    + Do not copy the GPL in /usr/share, it's already in common-licenses.
+    + Removed lintian overrides.
+  * src/obj_3d.C:
+    + gcc-3.4 build fix, courtesy of Andreas Jochens (Closes: #259843).
+
+ -- Sam Hocevar (Debian packages) <sam+deb@zoy.org>  Sat, 17 Jul 2004 10:14:03 +0200
+
+sabre (0.2.4b-19) unstable; urgency=low
+
+  * Rebuilt using gcc-3.3.
+  * debian/control:
+    + Set policy to 3.6.1.0.
+    + Removed the xlibs-dev build dependency; we don't directly use these
+      libraries during the build process.
+    + Removed leading "a" from short descriptions.
+  * debian/xsabre.menu:
+    + Fixed syntax.
+  * debian/copyright:
+    + Added a link to the GPL file on Debian systems.
+
+ -- Sam Hocevar (Debian packages) <sam+deb@zoy.org>  Tue, 16 Mar 2004 13:45:09 +0100
+
+sabre (0.2.4b-18) unstable; urgency=low
+
+  * Used dpkg-statoverride in the postinst/postrm to register /usr/games/sabre
+    binary instead of shipping a setuid binary.
+  * Set policy to 3.5.10.
+
+ -- Sam Hocevar (Debian packages) <sam+deb@zoy.org>  Fri, 30 May 2003 18:18:58 +0200
+
+sabre (0.2.4b-17) unstable; urgency=low
+
+  * New maintainer (Closes: #175226).
+  * Removed spurious Makefile.am file from the package.
+  * Re-ran "rm -f config.sub config.guess configure install-sh missing \
+    mkinstalldirs && aclocal && automake --copy --add-missing && autoconf"
+    (Closes: #175263, #185299).
+  * Removed build-dependency on automake and automake calls in debian/rules
+    (Closes: #175978).
+  * Added proper touches to avoid clock skews (Closes: #116223).
+
+ -- Samuel Hocevar <sam@zoy.org>  Fri, 18 Apr 2003 00:56:49 +0200
+
+sabre (0.2.4b-16) unstable; urgency=low
+
+  * Orphaned.
+
+ -- Milan Zamazal <pdm@zamazal.org>  Mon, 13 Jan 2003 14:54:28 +0100
+
+sabre (0.2.4b-15) unstable; urgency=low
+
+  * Build depend on xlibs-dev instead of xlib6g-dev; closes: #170147.
+
+ -- Milan Zamazal <pdm@zamazal.org>  Wed,  1 Jan 2003 20:28:08 +0100
+
+sabre (0.2.4b-14) unstable; urgency=low
+
+  * Write log file to a temporary directory instead of the current
+    directory; closes: #145817.
+
+ -- Milan Zamazal <pdm@debian.org>  Wed, 15 May 2002 11:07:41 +0200
+
+sabre (0.2.4b-13) unstable; urgency=low
+
+  * Joystick support included into xsabre.
+
+ -- Milan Zamazal <pdm@debian.org>  Sun,  6 Jan 2002 15:29:13 +0100
+
+sabre (0.2.4b-12) unstable; urgency=low
+
+  * Build-depend on the newer version of libsdl1.2-dev; closes: #117525.
+
+ -- Milan Zamazal <pdm@debian.org>  Fri,  9 Nov 2001 09:37:58 +0100
+
+sabre (0.2.4b-11) unstable; urgency=low
+
+  * Stupid omission in a C++ error fix fixed; really closes: #104860.
+  * Standards 3.5.6.
+
+ -- Milan Zamazal <pdm@debian.org>  Fri, 10 Aug 2001 13:54:34 +0200
+
+sabre (0.2.4b-10) unstable; urgency=low
+
+  * C++ errors reported by gcc 3 fixed; closes: #104860.
+  * Compiled with libsdl1.2.
+
+ -- Milan Zamazal <pdm@debian.org>  Sun, 22 Jul 2001 22:53:09 +0200
+
+sabre (0.2.4b-9) unstable; urgency=low
+
+  * Reference to documentation in the man page fixed; closes: #103193.
+  * Standards 3.5.5.
+  * Missing documentation files added.
+  * Documentation files used by the user interface moved to
+    /usr/share/games/sabre/doc/.
+  * `Depends' removed in sabre-common.
+  * `sabre' and `xsabre' require newer `sabre-common'.
+  * Lintian overrides added.
+  * Lintian 1.20.13 satisfied.
+
+ -- Milan Zamazal <pdm@debian.org>  Sat, 14 Jul 2001 10:10:11 +0200
+
+sabre (0.2.4b-8) unstable; urgency=low
+
+  * Build dependency on libncurses-dev added; closes: #84654.
+  * Standards 3.2.1.
+  * Compile with `-g' only if DEB_BUILD_OPTIONS requests it.
+  * Suidregister support removed.
+
+ -- Milan Zamazal <pdm@debian.org>  Sat,  3 Feb 2001 20:05:16 +0100
+
+sabre (0.2.4b-7) unstable; urgency=low
+
+  * sabre: Suggest xsabre.
+  * Consult `./VERSION' version in configure with path specification;
+    closes: #77680.
+  * Menu icon added (thanks to Robert Cleaver Ancell); closes: #75764.
+
+ -- Milan Zamazal <pdm@debian.org>  Sat, 25 Nov 2000 10:31:28 +0100
+
+sabre (0.2.4b-6) frozen unstable; urgency=low
+
+  * Another non-SVGAlib compilation bug fixed; closes: #57634.  (Thanks to
+    Roman Hodek.)
+  * General non-SVGAlib compilation cleanup done.
+
+ -- Milan Zamazal <pdm@debian.org>  Sat, 12 Feb 2000 12:18:02 +0100
+
+sabre (0.2.4b-5) frozen unstable; urgency=low
+
+  * Do not try to compress non-installed (for certain architectures) files
+    in rules; closes: #56813.  (Thanks to Roman Hodek.)
+
+ -- Milan Zamazal <pdm@debian.org>  Thu,  3 Feb 2000 19:07:43 +0100
+
+sabre (0.2.4b-4) frozen unstable; urgency=low
+
+  * libsdl dependencies fixed, thanks to Roman Hodek for explanation of
+    the problem; closes: #55708.
+  * Change .am makefiles, not the .in ones; build-depend on automake.
+  * Use better way of detecting host architecture than
+    `dpkg --print-architecture'.
+
+ -- Milan Zamazal <pdm@debian.org>  Sat, 22 Jan 2000 12:48:37 +0100
+
+sabre (0.2.4b-3) unstable; urgency=low
+
+  * Recompiled with libsdl1.0.
+  * Lintian 1.11.2 satisfied.
+
+ -- Milan Zamazal <pdm@debian.org>  Mon, 10 Jan 2000 21:07:31 +0100
+
+sabre (0.2.4b-2) unstable; urgency=low
+
+  * Yet another without-SVGAlib fix; closes: #52930.
+
+ -- Milan Zamazal <pdm@debian.org>  Fri, 17 Dec 1999 22:17:22 +0100
+
+sabre (0.2.4b-1) unstable; urgency=low
+
+  * New upstream version.
+  * Allow compilation without SVGAlib; closes: #51615.
+  * Do not compile dialog.
+  * I hate CVS!
+
+ -- Milan Zamazal <pdm@debian.org>  Sun,  5 Dec 1999 14:18:01 +0100
+
+sabre (0.2.4-6) unstable; urgency=low
+
+  * Standards 3.1.1.
+  * cflags fixes, thanks to Roman Hodek; closes: #49656.
+  * Home page added to description.
+  * Use xargs with find in rules.
+  * Build dependencies defined.
+  * Yoke control setting typo in `RunSabre*' fixed.
+  * xsabre works with cursor keys now; closes: #48035.
+
+ -- Milan Zamazal <pdm@debian.org>  Sat, 27 Nov 1999 12:50:20 +0100
+
+sabre (0.2.4-5) unstable; urgency=low
+
+  * Added dependency on libsdl0; closes: #47595.
+
+ -- Milan Zamazal <pdm@debian.org>  Wed, 20 Oct 1999 21:07:11 +0200
+
+sabre (0.2.4-4) unstable; urgency=low
+
+  * Added dependency on dialog; closes: #47593.
+  * Setuid root warning moved from sabre-common to sabre.
+  * Bashism removed from *RunSabre; closes: #47791.
+  * Remove log files on quit of *RunSabre.
+  * Lintian 1.10 satisfied.
+
+ -- Milan Zamazal <pdm@debian.org>  Tue, 19 Oct 1999 21:05:10 +0200
+
+sabre (0.2.4-3) unstable; urgency=low
+
+  * Moved to FHS.
+  * X version produced too now, package split to the sabre-common, sabre,
+    and xsabre packages.
+  * Standard dialog used.
+  * Compiled with original flags in CFLAGS.
+  * Menu support.
+  * Standards 3.0.1.
+  * Lintian 1.9.2 satisfied.
+
+ -- Milan Zamazal <pdm@debian.org>  Mon,  4 Oct 1999 22:36:29 +0200
+
+sabre (0.2.4-2) unstable; urgency=low
+
+  * Recompiled with egcc and glibc 2.1.
+  * No lintian 1.3 errors.
+
+ -- Milan Zamazal <pdm@debian.org>  Tue, 25 May 1999 12:21:16 +0200
+
+sabre (0.2.4-1) unstable; urgency=low
+
+  * New upstream version.
+  * Compile with `-g'.
+  * No lintian 1.1 errors.
+
+ -- Milan Zamazal <pdm@debian.org>  Sun, 25 Apr 1999 18:18:20 +0200
+
+sabre (0.2.3-3) frozen unstable; urgency=low
+
+  * Recompiled with libncurses4.
+  * Forced to use standard curses.h to compile with new ncurses.
+
+ -- Milan Zamazal <pdm@debian.org>  Mon,  2 Nov 1998 21:45:20 +0100
+
+sabre (0.2.3-2) frozen unstable; urgency=low
+
+  * Architecture changed to `i386' (Bug #27994).
+
+ -- Milan Zamazal <pdm@debian.org>  Thu, 15 Oct 1998 20:43:14 +0200
+
+sabre (0.2.3-1) unstable; urgency=low
+
+  * Initial Release.
+  * `vga_init' inserted at the very beginning of the setuid root program
+    to make it at least a bit secure.
+
+ -- Milan Zamazal <pdm@debian.org>  Sun, 11 Oct 1998 22:41:06 +0200

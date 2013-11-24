@@ -1,0 +1,141 @@
+#!/usr/bin/make -f
+
+package=sabre-common
+
+# Idea stolen from lincity
+svgalib-archs=i386
+ifeq ($(DEB_HOST_ARCH),)
+  ARCH:=$(shell dpkg-architecture -qDEB_HOST_ARCH 2>/dev/null)
+else
+  ARCH:=$(DEB_HOST_ARCH)
+endif
+ifneq (,$(findstring $(ARCH), $(svgalib-archs)))
+  make_svga=yes
+else
+  make_svga=no
+endif
+
+stamp-configure:
+	dh_testdir
+	QUILT_PATCHES=debian/patches quilt push -a || test $$? = 2
+	touch configure.in
+	touch aclocal.m4
+	touch configure
+	touch `find . -name Makefile.in`
+ifeq ($(make_svga),yes)
+	./configure --prefix=/usr --bindir=/usr/games
+else
+	./configure --prefix=/usr --bindir=/usr/games --without-svgalib
+endif
+	touch stamp-configure
+
+build: stamp-configure
+	dh_testdir
+	make
+	ln -sf ../src/main.C sdlsrc/
+	cd sdlsrc && make
+	ln -sf ../src/linux_joy.C joystick/
+	cd joystick && make
+	touch build
+
+clean: stamp-configure
+	dh_testdir
+	dh_testroot
+	-rm -f build stamp-configure
+	cd sdlsrc && make distclean
+	-rm -f sdlsrc/main.C
+	cd joystick && make distclean
+	-rm -f joystick/linux_joy.C
+	[ ! -f Makefile ] || make distclean
+	find . -name Makefile | xargs -r rm -f
+	QUILT_PATCHES=debian/patches quilt pop -a -R || test $$? = 2
+	rm -rf .pc/
+	dh_clean
+
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs -i
+	dh_installchangelogs -i
+	dh_compress -i
+	dh_fixperms -i
+	dh_installdeb -i
+	dh_md5sums -i
+	dh_gencontrol -psabre-common
+	dh_md5sums -psabre-common
+	dh_builddeb -psabre-common
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installmenu -pxsabre
+	dh_desktop
+ifeq ($(make_svga),yes)
+	dh_installmenu -psabre
+endif
+	dh_installdocs -a
+	dh_installchangelogs -a
+	dh_strip -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_installdeb -a
+	dh_shlibdeps -a
+	dh_md5sums -a
+	dh_gencontrol -pxsabre
+	dh_builddeb -pxsabre
+ifeq ($(make_svga),yes)
+	dh_gencontrol -psabre
+	dh_builddeb -psabre
+endif
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_installdirs
+ifeq ($(make_svga),yes)
+	make install prefix=$(CURDIR)/debian/$(package) bindir=$(CURDIR)/debian/$(package)/usr/games
+	mv $(CURDIR)/debian/$(package)/usr/games/* debian/sabre/usr/games/
+	install -m 755 RunSabre debian/sabre/usr/games/
+else
+	make install-data prefix=$(CURDIR)/debian/$(package) bindir=$(CURDIR)/debian/$(package)/usr/games
+endif
+	install -m 755 RunSabreSDL debian/xsabre/usr/games/XRunSabre
+	install -m 755 sdlsrc/sabresdl debian/xsabre/usr/games/
+	install -m 755 joystick/sabrejoycal debian/xsabre/usr/games/
+	find scenarios -type f -perm +100 -name '[a-z]*' | xargs -i -r \
+		install -m 755 {} debian/$(package)/usr/share/games/sabre/
+	find lib -type f -name '[a-z0-9]*' | xargs -i -r install -m 644 {} \
+		debian/$(package)/usr/share/games/sabre/{}
+	install -m 644 doc/*.txt debian/$(package)/usr/share/games/sabre/doc/
+	set -e; for i in CONTRIBUTORS HISTORY JOYSTICK.README README \
+                         REQUIREMENTS TODO TROUBLE_SHOOTING WHATSNEW; do \
+		install -m 644 $$i debian/$(package)/usr/share/games/sabre/doc/; \
+	done
+	install -m 644 dialogsrc/README \
+		debian/$(package)/usr/share/doc/$(package)/README-dialog
+	set -e; cd debian/$(package)/usr/share/doc/$(package); \
+		ln -s ../../games/sabre/doc/* .
+	install -m 644 debian/sabre.6 debian/$(package)/usr/share/man/man6/
+ifeq ($(make_svga),yes)
+	cp debian/$(package)/usr/share/man/man6/sabre.6 \
+		debian/sabre/usr/share/man/man6/
+	ln -s sabre.6.gz debian/sabre/usr/share/man/man6/RunSabre.6.gz
+endif
+	mv debian/$(package)/usr/share/man/man6/sabre.6 \
+		debian/xsabre/usr/share/man/man6/xsabre.6
+	ln -s xsabre.6.gz debian/xsabre/usr/share/man/man6/XRunSabre.6.gz
+	ln -s xsabre.6.gz debian/xsabre/usr/share/man/man6/sabresdl.6.gz
+	install -m 644 debian/xsabre.xpm \
+		debian/xsabre/usr/share/pixmaps/
+
+	install -m 644 debian/xsabre.desktop \
+		debian/xsabre/usr/share/applications/
+
+	#Remove empty dirs.
+	rm -rf $(CURDIR)/debian/sabre-common/usr/share/man
+	rm -rf $(CURDIR)/debian/sabre-common/usr/games
+	rm -rf $(CURDIR)/debian/sabre-common/usr/share/games/sabre/lib/fonts
+
+binary: binary-indep binary-arch
+
+.PHONY: binary binary-arch binary-indep clean

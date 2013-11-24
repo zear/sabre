@@ -1,0 +1,9 @@
+Packaged for Debian by Milan Zamazal <pdm@debian.org>.
+
+Run the simulator as `XRunSabre'.
+
+Space and F-keys do not work in the X version.  If you really desire for them,
+let me know, and I will try to do something about this.
+
+See /usr/share/doc/sabre-common/ for the documentation.
+

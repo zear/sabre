@@ -1,0 +1,56 @@
+Source: sabre
+Section: games
+Priority: optional
+Maintainer: Debian Games Team <pkg-games-devel@lists.alioth.debian.org>
+Uploaders: Sam Hocevar (Debian packages) <sam+deb@zoy.org>, Barry deFreese <bddebian@comcast.net>, Evgeni Golov <sargentd@die-welt.net>
+Build-Depends: debhelper (>= 5.0), quilt, libncurses-dev, libsdl1.2-dev (>= 1.2.2-3.1), libsvga1-dev [i386]
+Standards-Version: 3.7.3
+Homepage: http://sabre.cobite.com/
+Vcs-Svn: svn://svn.debian.org/svn/pkg-games/packages/trunk/sabre/
+Vcs-Browser: http://svn.debian.org/wsvn/pkg-games/packages/trunk/sabre/?op=log
+
+Package: sabre-common
+Architecture: all
+Recommends: sabre | xsabre
+Conflicts: sabre (<< 0.2.4-3)
+Description: data for the SABRE fighter plane simulator
+ SABRE is an on-going game development for the Linux Operating System,
+ worked on as a labor of love by flight-simulation enthusiasts.
+ .
+ For now, SABRE is focusing on the older jets and piston-engined
+ fighters of the Korean War / Cold War era.  Featured are F-86 SabreJet,
+ MiG-15, F-84 ThunderJet, F-51 Mustang, and Yak-9.  All of the planes in
+ the game can be flown by the player as well as the computer pilots.
+ .
+ This package contains binaries and data common to both svgalib and X version
+ of sabre.
+
+Package: sabre
+Architecture: i386
+Depends: sabre-common (>= 0.2.4b-9), dialog (>= 0.9a), ${shlibs:Depends}
+Conflicts: suidmanager (<< 0.50)
+Suggests: xsabre
+Description: fighter plane simulator for svgalib
+ SABRE is an on-going game development for the Linux Operating System,
+ worked on as a labor of love by flight-simulation enthusiasts.
+ .
+ For now, SABRE is focusing on the older jets and piston-engined
+ fighters of the Korean War / Cold War era.  Featured are F-86 SabreJet,
+ MiG-15, F-84 ThunderJet, F-51 Mustang, and Yak-9.  All of the planes in
+ the game can be flown by the player as well as the computer pilots.
+ .
+ This package contains the svgalib binary.
+
+Package: xsabre
+Architecture: any
+Depends: sabre-common (>= 0.2.4b-9), dialog (>= 0.9a), xterm | x-terminal-emulator, ${shlibs:Depends}
+Description: fighter plane simulator for X11
+ SABRE is an on-going game development for the Linux Operating System,
+ worked on as a labor of love by flight-simulation enthusiasts.
+ .
+ For now, SABRE is focusing on the older jets and piston-engined
+ fighters of the Korean War / Cold War era.  Featured are F-86 SabreJet,
+ MiG-15, F-84 ThunderJet, F-51 Mustang, and Yak-9.  All of the planes in
+ the game can be flown by the player as well as the computer pilots.
+ .
+ This package contains the X binary.

@@ -1,0 +1,9 @@
+Packaged for Debian by Milan Zamazal <pdm@debian.org>.
+
+Though I have fixed the most horrible security bug by inserting vga_init() at
+the very beginning of the program, I cannot guarantee the setuid root binary is
+secure.
+
+Run the simulator as `RunSabre'.
+
+See /usr/share/doc/sabre-common/ for the documentation.

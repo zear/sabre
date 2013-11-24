@@ -1,0 +1,3 @@
+?package(sabre):needs="vc" section="Games/Action" title="Sabre" \
+	command="/usr/games/RunSabre" \
+	longtitle="The Sabre flight simulator"

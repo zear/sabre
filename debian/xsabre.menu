@@ -1,0 +1,4 @@
+?package(xsabre):needs="text" section="Games/Action" title="Sabre" \
+	icon="/usr/share/pixmaps/xsabre.xpm" \
+	command="/usr/games/XRunSabre" \
+	longtitle="The Sabre flight simulator"
