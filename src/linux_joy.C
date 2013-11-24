@@ -32,6 +32,7 @@
 #include <values.h>
 // Define this in the Makefile if joystick drivers
 // installed
+
 #ifdef JSTICK_INSTALLED
 #include <linux/joystick.h>
 #else
@@ -48,8 +49,8 @@
 
 char *LinuxJoystick::joydef0 = "joy0.def";
 char *LinuxJoystick::joydef1 = "joy1.def";
-char *LinuxJoystick::joydev0 = "/dev/js0";
-char *LinuxJoystick::joydev1 = "/dev/js1";
+char *LinuxJoystick::joydev0 = "/dev/input/js0";
+char *LinuxJoystick::joydev1 = "/dev/input/js1";
 
 const float LinuxJoystick::DEAD_ZONE = 0.05;
 

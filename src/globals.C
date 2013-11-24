@@ -38,7 +38,7 @@
 #define DEFAULT_LIB ".\\lib"
 #else
 #ifdef DEBIAN
-#define DEFAULT_LIB "/usr/share/sabre/lib"
+#define DEFAULT_LIB "./lib"
 #else
 #define DEFAULT_LIB "./lib"
 #endif

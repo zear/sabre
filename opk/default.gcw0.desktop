@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Sabre
+Comment=Flight simulator with fighter planes of the Korean War era
+Exec=./RunSabre
+Terminal=true
+Type=Application
+StartupNotify=true
+Icon=icon
+Categories=games;

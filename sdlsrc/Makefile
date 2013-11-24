@@ -24,7 +24,7 @@ SHELL = /bin/sh
 srcdir = .
 top_srcdir = ..
 
-prefix = /usr/local
+prefix = /tmp/gcw
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin
@@ -65,17 +65,17 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-host_alias = 
-host_triplet = 
+host_alias = mipsel-linux
+host_triplet = mipsel-unknown-linux-gnu
 AUTOCONF = autoconf
 AUTOMAKE = automake
-CC = gcc
-CXX = g++
+CC = mipsel-linux-gcc
+CXX = mipsel-linux-g++
 HAVE_LIB = @HAVE_LIB@
 LIB = @LIB@
 LTLIB = @LTLIB@
 PACKAGE = sabre
-RANLIB = ranlib
+RANLIB = mipsel-linux-ranlib
 REV_DATE = 11/21/99
 VERSION = 0.2.4b
 
@@ -89,16 +89,16 @@ sabresdl_LDADD = $(SABREOBJS) ../libzip/libcomp.a ../libzip/libuncl.a
 EXTRA_DIST = *.h *.c SDL_PORT_README
 INCLUDES = -I../src -I../libzip
 #LIBS = -lm -ldl -lSDL -lncurses
-LIBS = -lm -ldl `sdl-config --libs` -lncurses
-CXXFLAGS = -march=i686 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4 -DDEBIAN -DDEBIAN_NO_LIBVGA
+LIBS = -lm -ldl `sdl-config --libs` #-lncurses
+CXXFLAGS = -g -O2 -DDEBIAN -DDEBIAN_NO_LIBVGA
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
 PROGRAMS =  $(bin_PROGRAMS)
 
 
 DEFS = -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DVERSION=\"0.2.4b\" -DREV_DATE=\"11/21/99\" -DUSING_NEWPILOT=1 -DJSTICK_INSTALLED=1 -DHAVE_LIBNCURSES=1 -DHAVE_LIBM=1  -I. -I$(srcdir) 
-CPPFLAGS = -D_FORTIFY_SOURCE=2
-LDFLAGS = -Wl,-O1,--sort-common,--as-needed,-z,relro
+CPPFLAGS = 
+LDFLAGS = 
 sabresdl_OBJECTS =  main.o vga_13.o kbdhit.o input.o fontdev.o
 sabresdl_DEPENDENCIES =  ../src/game.o ../src/scnedit.o ../src/vmath.o \
 ../src/traveler.o ../src/pen.o ../src/transblt.o ../src/port_3d.o \

@@ -1,0 +1,21 @@
+***********************************************
+* SABRE Fighter Plane Simulator for GCW Zero  *
+* Documentation file: keys.txt                *
+* November, 2013                              *
+***********************************************
+
+Key Reference:
+
+Analog joyst.	- control the yoke
+A button	- fire weapon
+B button	- rear view
+Y button	- front view
+X button	- switch camera to next plane
+L button	- engage/disengage autopilot
+R button	- select next weapon
+D-PAD up	- increase throttle
+D-PAD down	- decrease throttle
+D-PAD left	- engage/disengage speed brakes
+D-PAD right	- engage/disengage wheel brakes
+START button	- select next target
+SELECT button	- exit to menu

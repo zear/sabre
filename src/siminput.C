@@ -72,8 +72,39 @@ int FlightInput::UpdateFlightInput(FlightInput &fi,
   Flight &the_flight = (Flight &) *node.flight;
   if (!fi.update(the_flight,kbdin))
     result = SwitchOnKey(kbdin,node,fm);
+//  kbdin_lock = 0;
+//  kbdin = FI_NO_KEY;
+if(KBHit::key_repeat[kbdin])
+{
+	if(kbdin == FI_BANG_BANG) // don't repeat non-gun weapons
+	{
+		Weapon_Instance *wep = node.pilot->get_sel_weapon();
+
+		if(!(wep->weapon->w_specs->wep_type == gun_t || wep->weapon->w_specs->wep_type == cannon_t))
+		{
+			kbdin_lock = 0;
+			kbdin = FI_NO_KEY;
+			KBHit::key_repeat[kbdin] = false;
+		}
+	}
+}
+//if(kbdin == FI_BANG_BANG)
+//{
+//	static int timer = 50;
+//	if(timer == 0)
+//	{
+//		kbdin = FI_NO_KEY;
+//		timer = 50;
+//	}
+//	else
+//		kbdin = FI_BANG_BANG;
+//	timer--;
+//}
+else
+{
   kbdin_lock = 0;
   kbdin = FI_NO_KEY;
+}
   return result;
 }
 
@@ -343,6 +374,7 @@ int FlightInput::SwitchOnKey(int, Flight_Node &node, Flight_Manager &fm)
 
     case FI_BANG_BANG:
       flt.controls.bang_bang = 1;
+      //kbdin_lock = 1;
       break;
 
     case FI_NEXT_TARGET:

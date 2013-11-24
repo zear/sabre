@@ -44,6 +44,7 @@ int kbdin = 0;
 
 KBHit kbhit;
 int   KBHit::kbdin = 0;
+bool KBHit::key_repeat[256];
 KBHit::KBHit()
 {
 

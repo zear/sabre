@@ -140,8 +140,10 @@ main(int argc, char *argv[])
 #endif
   int i;
   int m;
-  printf("Sabre Fighter Plane Simulator Version %s %s\n",
-	 VERSION,REV_DATE);
+  printf("Sabre Fighter Plane Simulator v. %s 11/24/13\n",
+         VERSION,REV_DATE);
+//  printf("Sabre Fighter Plane Simulator v. %s %s\n",
+//	 VERSION,REV_DATE);
   for (i=1;i<argc;i++)
     {
       if (!strcmp(argv[i],"-o"))

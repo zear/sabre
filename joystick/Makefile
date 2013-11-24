@@ -22,7 +22,7 @@ SHELL = /bin/sh
 srcdir = .
 top_srcdir = ..
 
-prefix = /usr/local
+prefix = /tmp/gcw
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin
@@ -63,17 +63,17 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-host_alias = 
-host_triplet = 
+host_alias = mipsel-linux
+host_triplet = mipsel-unknown-linux-gnu
 AUTOCONF = autoconf
 AUTOMAKE = automake
-CC = gcc
-CXX = g++
+CC = mipsel-linux-gcc
+CXX = mipsel-linux-g++
 HAVE_LIB = @HAVE_LIB@
 LIB = @LIB@
 LTLIB = @LTLIB@
 PACKAGE = sabre
-RANLIB = ranlib
+RANLIB = mipsel-linux-ranlib
 REV_DATE = 11/21/99
 VERSION = 0.2.4b
 
@@ -88,13 +88,13 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
 PROGRAMS =  $(bin_PROGRAMS)
 
-CPPFLAGS = -D_FORTIFY_SOURCE=2
-LDFLAGS = -Wl,-O1,--sort-common,--as-needed,-z,relro
+CPPFLAGS = 
+LDFLAGS = 
 LIBS = -lm -lncurses 
 sabrejoycal_OBJECTS =  linux_joy.o
 sabrejoycal_DEPENDENCIES = 
 sabrejoycal_LDFLAGS = 
-CXXFLAGS = -march=i686 -mtune=generic -O2 -pipe -fstack-protector --param=ssp-buffer-size=4
+CXXFLAGS = -g -O2
 CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@

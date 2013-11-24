@@ -30,6 +30,7 @@ int kbdin = 0;
 #include <ctype.h>
 #include "pc_keys.h"
 #include "kbdhit.h"
+#include "sbrvkeys.h"
 
 
 /*
@@ -77,6 +78,7 @@ static const int sdl_to_standard[256] =
 
 KBHit kbhit;
 int   KBHit::kbdin = 0;
+bool KBHit::key_repeat[256];
 KBHit::KBHit()
 {
 
@@ -123,27 +125,95 @@ int KBHit::getch()
 
 #ifdef HAVE_LIBSDL
   if(SDL_PollEvent(&event))
-#else  
+#else 
     if (kbdhit())
 #endif
       {
 #ifdef HAVE_LIBSDL
 #ifdef DEBIAN
-	c=event.key.keysym.sym;
-	c = sdl_to_standard[c];
+//	c=event.key.keysym.sym;
 
-	if (event.key.keysym.sym == SDLK_RSHIFT || event.key.keysym.sym == SDLK_LSHIFT)
-	  {
-	    kbdin = 0;
-	    return (0);
-	  }
+	// GCW Zero hack
+	switch(event.type)
+	{
+		case SDL_KEYDOWN:
+			switch(event.key.keysym.sym)
+			{
+				case SDLK_LCTRL:
+					c = SDLK_a;
+					KBHit::key_repeat[FI_BANG_BANG] = true;
+				break;
+				case SDLK_LALT:
+					c = SDLK_b;
+				break;
+				case SDLK_LSHIFT:
+					c = SDLK_x;
+				break;
+				case SDLK_SPACE:
+					c = SDLK_y;
+				break;
+				case SDLK_TAB:
+					c = SDLK_l;
+				break;
+				case SDLK_BACKSPACE:
+					c = SDLK_r;
+				break;
+				case SDLK_UP:
+					c = SDLK_u - 32;
+					KBHit::key_repeat[FI_THROTTLE_PLUS] = true;
+				break;
+				case SDLK_DOWN:
+					c = SDLK_d - 32;
+					KBHit::key_repeat[FI_THROTTLE_MINUS] = true;
+				break;
+				case SDLK_LEFT:
+					c = SDLK_l - 32;
+				break;
+				case SDLK_RIGHT:
+					c = SDLK_r - 32;
+				break;
 
-	cm = (char) event.key.keysym.mod;
+				default:
+					c = event.key.keysym.sym;
+				break;
+			}
 
-	if ((cm  == KMOD_LSHIFT || cm  == KMOD_RSHIFT) && c >= 97 && c <= 122)
-	  {
-	    c -= 32;
-	  }
+			c = sdl_to_standard[c];
+
+		//	if (event.key.keysym.sym == SDLK_RSHIFT || event.key.keysym.sym == SDLK_LSHIFT)
+		//	  {
+		//	    kbdin = 0;
+		//	    return (0);
+		//	  }
+
+		//	cm = (char) event.key.keysym.mod;
+
+		//	if ((cm  == KMOD_LSHIFT || cm  == KMOD_RSHIFT) && c >= 97 && c <= 122)
+		//	  {
+		//	    c -= 32;
+		//	  }
+		break;
+		case SDL_KEYUP:
+			switch(event.key.keysym.sym)
+			{
+				case SDLK_LCTRL:
+					KBHit::key_repeat[FI_BANG_BANG] = false;
+				break;
+				case SDLK_UP:
+					KBHit::key_repeat[FI_THROTTLE_PLUS] = false;
+				break;
+				case SDLK_DOWN:
+					KBHit::key_repeat[FI_THROTTLE_MINUS] = false;
+				break;
+
+				default:
+				break;
+			}
+		break;
+
+		default:
+		break;
+	}
 #else
 	c=SDL_SymToASCII(&(event.key.keysym),NULL);
 #endif

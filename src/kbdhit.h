@@ -32,6 +32,7 @@ public:
   fd_set rfds;
   struct termios oldios,newios;
   static int kbdin;
+  static bool key_repeat[256];
 
   KBHit();
   ~KBHit();

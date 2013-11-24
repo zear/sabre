@@ -27,7 +27,7 @@ SHELL = /bin/sh
 srcdir = .
 top_srcdir = .
 
-prefix = /usr/local
+prefix = /tmp/gcw
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin
@@ -68,17 +68,17 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-host_alias = 
-host_triplet = 
+host_alias = mipsel-linux
+host_triplet = mipsel-unknown-linux-gnu
 AUTOCONF = autoconf
 AUTOMAKE = automake
-CC = gcc
-CXX = g++
+CC = mipsel-linux-gcc
+CXX = mipsel-linux-g++
 HAVE_LIB = @HAVE_LIB@
 LIB = @LIB@
 LTLIB = @LTLIB@
 PACKAGE = sabre
-RANLIB = ranlib
+RANLIB = mipsel-linux-ranlib
 REV_DATE = 11/21/99
 VERSION = 0.2.4b
 

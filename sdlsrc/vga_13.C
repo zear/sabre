@@ -134,6 +134,8 @@ void init_vga_13(void)
   SDL_WM_SetCaption("Sabre - SDL Version", "Sabre"); 
   SDL_SetEventFilter(FilterEvents);
   SDL_EventState(SDL_MOUSEMOTION, SDL_ENABLE);
+  SDL_ShowCursor(0); // disable mouse cursor
+  //SDL_EnableKeyRepeat(100, 10);
 #else    
   /* Create gdev for svgalib */
   assign_gdev_svgalib();
@@ -545,6 +547,8 @@ void mline(int x0, int y0, int x1, int y1, char color)
 int FilterEvents(const SDL_Event *event)
 {
   if(event->type == SDL_KEYDOWN)
+    return 1;
+  if(event->type == SDL_KEYUP)
     return 1;
   return 0;
 }
