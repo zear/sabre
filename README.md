@@ -5,7 +5,7 @@ In order to compile:
 cd ./sabre/
 make
 cd ./sdlsrc/
-cp ../src/main.C
+cp ../src/main.C .
 make
 ```
 
