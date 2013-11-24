@@ -1,11 +1,11 @@
 GCW Zero port of Sabre by Artur "zear" Rojek
 
 In order to compile:
-    cd ./sabre/
-    make
-    cd ./sdlsrc/
-    cp ../src/main.C
-    make
+	cd ./sabre/
+	make
+	cd ./sdlsrc/
+	cp ../src/main.C
+	make
 
 GCW Zero release files are in ./opk/
 
